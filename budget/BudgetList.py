@@ -1,4 +1,5 @@
 from . import Expense
+import matplotlib.pyplot as plt
 
 class BudgetList():
     def __init__(self,budget):
@@ -18,6 +19,18 @@ class BudgetList():
 
     def __len__(self):
         return self.expenses.len()+self.overages.len()
+    
+    def __iter__(self):
+        def __init__(self):
+            self.iter_e = iter(self.expenses)
+            self.iter_o = iter(self.overages)
+            return self
+
+    def __next__(self):
+        try:
+            return self.iter_e.__next__()
+        except StopIteration as stop:
+            return self.iter_o.__next__()
 
 
 def main():
@@ -25,20 +38,18 @@ def main():
     expenses = Expense.Expenses()
     expenses.read_expenses("data/spending_data.csv")
     print('The count of all expenses: ' + str(len(myBudgetList)))
+    for entry in myBudgetList:
+        print(entry)
 
     for expense in expenses.list:
         myBudgetList.append(expense.amount)
 
     if __name__ == "__main__":
         main()
-
-
-
-
-
-
-
-
-    
-            
-
+        
+        fig, ax = plt.subplots()
+        labels = ['Expenses', 'Overages', 'Budget'] 
+        values = [myBudgetList.sum_expenses, myBudgetList.sum_overages, myBudgetList.budget]
+        ax.bar(labels,values,color=['green','red','blue'])
+        ax.set_title('Your total expenses vs. total budget')
+        plt.show()
