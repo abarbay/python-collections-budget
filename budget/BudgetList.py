@@ -1,11 +1,12 @@
 from . import Expense
 
-class BudgetList(self,budget):
-    self.budget = budget
-    self.sum_expenses = 0
-    self.expenses = []
-    self.sum_overages = 0
-    self.overgaes = []
+class BudgetList():
+    def __init__(self,budget):
+        self.budget = budget
+        self.sum_expenses = 0
+        self.expenses = []
+        self.sum_overages = 0
+        self.overgaes = []
 
     def append(self, item):
         if self.sum_expenses+item<self.budget:
@@ -18,19 +19,22 @@ class BudgetList(self,budget):
     def __len__(self):
         return self.expenses.len()+self.overages.len()
 
-    
+
 def main():
     myBudgetList = BudgetList(1200)
-if __name__ is "__main__":
-    main()
+    expenses = Expense.Expenses()
+    expenses.read_expenses("data/spending_data.csv")
+    print('The count of all expenses: ' + str(myBudgetList.len()))
 
-expenses = Expense.Expenses()
-expenses.read_expenses("data/spending_data.csv")
+    for expense in expenses.list:
+        myBudgetList.append(expense.amount)
 
-for expense in expenses.list:
-    myBudgetList.append(expense.amount)
+    if __name__ == "__main__":
+        main()
 
-print('The count of all expenses: ' + str(myBudgetList.len()))
+
+
+
 
 
 
